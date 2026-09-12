@@ -137,7 +137,7 @@ function Pizza({ objectdata }) {
 
 // function Footer(){}//we can use arow functions
 const Footer = () => {
-  const hour = new Date().getHours();
+  const hour = new Date.getHours();
   const openHour = 9;
   const closeHour = 20;
   const isOpen = hour >= openHour && hour <= closeHour;
@@ -179,45 +179,3 @@ root.render(
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------
 // ctrl c can stop the running program and again start it with npm start
-
-//   Components : React applicatons are entirely made out of components ,these are just js functions
-// Building blocks of user interfaces in React.
-// Piece of UI that has => its own data => has own JS logic and => has own appearance (how it ooks and works )
-//  We build complex UI by building multiple components and combining them , Components can be reused nested inside each other and pass data between them.
-
-//what is JSX : components =data ,logc ,apperance
-// JSX is a declaratice syntax to describe what components look like and how they work ,Components must return a block of JSX . Extension of js that allows us to embed js,css and react components into html. Each JSX element is converted to a react.createelement function call . We could use React without JSX
-
-// JSX is a declarative syntax => 1 :imperative:Manual DOM element selections and DOM traversing . Step by step DOM mutations until we reach the desire UI
-// 2: Descibe what UI should like using JSX based on curren data . React is an abstraction away  from DOM we never touch the DOM . Instead we think of the UI as a reflection of the current data
-
-// why react make html css ans js combine together ?
-//React combines HTML, CSS, and JavaScript because it unites the layout, style, and logic of a single user interface element into one self-contained file.
-
-// separation of concern :Yes, React absolutely has Separation of Concerns, but it separates your code by feature (components) rather than by technology (HTML/CSS/JS files).
-
-// Props: is essentially how we pass data between copmonents and on particular from parent components to child compoents , we can imagune rop as being like a communication channel between a parent and a child component,
-// used to pass data from arent component s to child componens , anytshing can be passed ads props single values, arrays,objects,function , even other comonents
-
-// HOW JSX WORKS: JSx works essentially like html, but we can enter js mode b y using{} (for text or attributes).
-// we can place js expreion inide {}, statements are not allowed (if/else,for etc).
-// a piece of jsx produces js expression
-// we can place other pieces of jsx inside {}, we can write jsx anywhere inside a coponent in if else , assign to variables ,pass ti into fns
-// a piece  of jsx can only have one root element. if you need more use <React.Fragment>(or the short <>)
-// Differences between jsx and html
-// className instead of HTML class , every tag needs to be closed e.g <img /> ,< br/>, all event handlers and other properties need to be camelCased ,Css inline styles are written lie this :{{style}} these properties are also named camelCased,  and comments need to be in {}
-
-// short circuiting && return 2nd value if first value is true i,e isOpen && 'yeah open' if isopen =true then it print yeah open
-// short circuiting || if ist one is true then it print first one : if false then move to2nd one and print it
-
-// Uing if else in component return(): ham if else ko return ke andar nahi lik sakthe ai ke bajaye hum ternary operators use krte hai return statement me :
-// Asan lafzon me baat ye hai ke: if/else ek "Statement" hai (jo koi value nahi deta), jabkay Ternary Operator ek "Expression" hai (jo ek final value return karta hai).React ke return ke andar hum sirf wahi cheez likh sakte hain jo koi Value generate kare.
-
-// React Fragments:React Fragments ek aisa feature hain jo aapko multiple JSX elements ko group karne ki ijazat deta hai bina kisi extra HTML element (jaise <div>) ko DOM me add kiye.Simple lafzon me kahein to, ye code ko wrapper to deta hai lekin browser ki HTML screen par koi naya tabahi ya fuzool <div> paida nahi karta.
-// Humay Fragments ki zaroorat kyun parti hai?React ka ek sakt rule hai: Aapka component hamesha ek single parent element return karna chahiye. Agar aap ek se zyada sibling elements return karne ki koshish karenge, to React error de dega.
-// USE :<></> or Full syntax (<React.Fragment>) tab zaroori ho jata hai jab aap .map() use karke koi list render kar rahe hon aur aapko loop ke elements ko ek unique key assign karni ho, lekin aap extra <div> bhi nahi chahte.
-
-// RENDERING : Rendering ka matlab hai React Component ke code ko screen par actual HTML visual me convert karna.Jab aapka React component run hota hai, to wo JSX (HTML jaisa code) return karta hai. React is JSX ko process karta hai aur aapke browser ke screen par elements (text, buttons, divs) ko draw ya display karta hai. Is poore process ko Rendering kehte hain.
-
-// promp:
-// slightly add more study needed things if necessory and writing tune is good and remove comments etc so i can save it on file make it structure beutiful "
