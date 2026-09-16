@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 import App from "./App";
-import AppAccordian from "./Accordian component/accordian";
-import Apptip from "./tipCalculator/Apptip";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    {/* <AppAccordian /> */}
-    <Apptip />
+    <App />
   </React.StrictMode>,
 );

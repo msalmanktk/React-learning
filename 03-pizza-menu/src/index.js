@@ -61,7 +61,7 @@ function App() {
 
 //creating more components
 function Header() {
-  const style = { textTransform: "uppercase" };
+  // const style = { textTransform: "uppercase" };
   return (
     <header className="header">
       {/* <h1 style={{ ...style, color: "red", fontSize: "48px" }}> */}
