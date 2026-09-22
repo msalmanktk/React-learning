@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Children, useState } from "react";
 
 const tempMovieData = [
   {
@@ -55,114 +55,21 @@ export default function App() {
 
   return (
     <>
-      {/* <nav className="nav-bar">
-        <div className="logo">
-          <span role="img">🍿</span>
-          <h1>usePopcorn</h1>
-        </div>
-        <input
-          className="search"
-          type="text"
-          placeholder="Search movies..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <p className="num-results">
-          Found <strong>{movies.length}</strong> results
-        </p>
-      </nav> */}
-      <Nav movies={movies} />
-
-      <main className="main">
-        {/* <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen1((open) => !open)}
-          >
-            {isOpen1 ? "–" : "+"}
-          </button>
-          {isOpen1 && (
-            <ul className="list">
-              {movies?.map((movie) => (
-                <li key={movie.imdbID}>
-                  <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                  <h3>{movie.Title}</h3>
-                  <div>
-                    <p>
-                      <span>🗓</span>
-                      <span>{movie.Year}</span>
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div> */}
-        <MainLeft movies={movies} />
-
-        {/* <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen2((open) => !open)}
-          >
-            {isOpen2 ? "–" : "+"}
-          </button>
-          {isOpen2 && (
-            <>
-              <div className="summary">
-                <h2>Movies you watched</h2>
-                <div>
-                  <p>
-                    <span>#️⃣</span>
-                    <span>{watched.length} movies</span>
-                  </p>
-                  <p>
-                    <span>⭐️</span>
-                    <span>{avgImdbRating}</span>
-                  </p>
-                  <p>
-                    <span>🌟</span>
-                    <span>{avgUserRating}</span>
-                  </p>
-                  <p>
-                    <span>⏳</span>
-                    <span>{avgRuntime} min</span>
-                  </p>
-                </div>
-              </div>
-
-              <ul className="list">
-                {watched.map((movie) => (
-                  <li key={movie.imdbID}>
-                    <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                    <h3>{movie.Title}</h3>
-                    <div>
-                      <p>
-                        <span>⭐️</span>
-                        <span>{movie.imdbRating}</span>
-                      </p>
-                      <p>
-                        <span>🌟</span>
-                        <span>{movie.userRating}</span>
-                      </p>
-                      <p>
-                        <span>⏳</span>
-                        <span>{movie.runtime} min</span>
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div> */}
-        <MainRight />
-      </main>
+      <Nav>
+        {" "}
+        <Numresult movies={movies} />
+      </Nav>
+      <Main>
+        <MainLeft>
+          {" "}
+          <Movieslist movies={movies} />{" "}
+        </MainLeft>
+      </Main>
     </>
   );
 }
 
-function Nav({ movies }) {
+function Nav({ children }) {
   const [query, setQuery] = useState("");
   return (
     <nav className="nav-bar">
@@ -177,39 +84,53 @@ function Nav({ movies }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <p className="num-results">
-        Found <strong>{movies.length}</strong> results
-      </p>
+      {children}
     </nav>
   );
 }
-function MainLeft({ movies }) {
+function Numresult({ movies }) {
+  return (
+    <>
+      <p className="num-results">
+        Found <strong>{movies.length}</strong> results
+      </p>
+    </>
+  );
+}
+function Main({ children }) {
+  return (
+    <main className="main">
+      {children}
+      <MainRight />
+    </main>
+  );
+}
+function MainLeft({ children }) {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen1((open) => !open)}
-      >
-        {isOpen1 ? "–" : "+"}
-      </button>
-      {isOpen1 && (
-        <ul className="list">
-          {movies?.map((movie) => (
-            <li key={movie.imdbID}>
-              <img src={movie.Poster} alt={`${movie.Title} poster`} />
-              <h3>{movie.Title}</h3>
-              <div>
-                <p>
-                  <span>🗓</span>
-                  <span>{movie.Year}</span>
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      <Button setIsOpen2={setIsOpen1} isOpen2={isOpen1} />
+
+      {isOpen1 && children}
     </div>
+  );
+}
+function Movieslist({ movies }) {
+  return (
+    <ul className="list">
+      {movies?.map((movie) => (
+        <li key={movie.imdbID}>
+          <img src={movie.Poster} alt={`${movie.Title} poster`} />
+          <h3>{movie.Title}</h3>
+          <div>
+            <p>
+              <span>🗓</span>
+              <span>{movie.Year}</span>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 function MainRight() {
@@ -220,60 +141,95 @@ function MainRight() {
   const avgRuntime = average(watched.map((movie) => movie.runtime));
   return (
     <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
+      <Button isOpen2={isOpen2} setIsOpen2={setIsOpen2} />
       {isOpen2 && (
         <>
-          <div className="summary">
-            <h2>Movies you watched</h2>
-            <div>
-              <p>
-                <span>#️⃣</span>
-                <span>{watched.length} movies</span>
-              </p>
-              <p>
-                <span>⭐️</span>
-                <span>{avgImdbRating}</span>
-              </p>
-              <p>
-                <span>🌟</span>
-                <span>{avgUserRating}</span>
-              </p>
-              <p>
-                <span>⏳</span>
-                <span>{avgRuntime} min</span>
-              </p>
-            </div>
-          </div>
+          <Summary
+            watched={watched}
+            avgImdbRating={avgImdbRating}
+            avgUserRating={avgUserRating}
+            avgRuntime={avgRuntime}
+          />
 
-          <ul className="list">
-            {watched.map((movie) => (
-              <li key={movie.imdbID}>
-                <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                <h3>{movie.Title}</h3>
-                <div>
-                  <p>
-                    <span>⭐️</span>
-                    <span>{movie.imdbRating}</span>
-                  </p>
-                  <p>
-                    <span>🌟</span>
-                    <span>{movie.userRating}</span>
-                  </p>
-                  <p>
-                    <span>⏳</span>
-                    <span>{movie.runtime} min</span>
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <Watchedmovie watched={watched} />
         </>
       )}
     </div>
   );
 }
+function Summary({ watched, avgImdbRating, avgUserRating, avgRuntime }) {
+  return (
+    <div className="summary">
+      <h2>Movies you watched</h2>
+      <div>
+        <p>
+          <span>#️⃣</span>
+          <span>{watched.length} movies</span>
+        </p>
+        <p>
+          <span>⭐️</span>
+          <span>{avgImdbRating}</span>
+        </p>
+        <p>
+          <span>🌟</span>
+          <span>{avgUserRating}</span>
+        </p>
+        <p>
+          <span>⏳</span>
+          <span>{avgRuntime} min</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+function Watchedmovie({ watched }) {
+  return (
+    <ul className="list">
+      {watched.map((movie) => (
+        <li key={movie.imdbID}>
+          <img src={movie.Poster} alt={`${movie.Title} poster`} />
+          <h3>{movie.Title}</h3>
+          <div>
+            <p>
+              <span>⭐️</span>
+              <span>{movie.imdbRating}</span>
+            </p>
+            <p>
+              <span>🌟</span>
+              <span>{movie.userRating}</span>
+            </p>
+            <p>
+              <span>⏳</span>
+              <span>{movie.runtime} min</span>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+function Button({ setIsOpen2, isOpen2 }) {
+  return (
+    <button className="btn-toggle" onClick={() => setIsOpen2((open) => !open)}>
+      {isOpen2 ? "–" : "+"}
+    </button>
+  );
+}
+
+// component catogories
+// Most of your components will naturally fall into one of three categories:
+// Stateless / presentational components : these dont have any states usually they are components that recievs some props and simply present recieved data or other content
+// Statefull components : that have state, can be reusable
+// Structurla components :Pages, layouts or screens of the app : REsult of composition ,Can be huge and non reusable.
+
+// Prop driling : moving prop from parent to needed child but in between both ther eare too many children which it is also passed so to reach to needed child
+
+// COMPONENT COMPOSITION:
+// Using a comoponet =
+// function modal(){  return (<div > <Success /></div >)} Success is indide mofal : we ca not reuse modal
+// component composition= is a technique used to combine different components using children rops or explicitly defined props:
+// in component compostion we can
+// =>create a highly reusabel and flexible como=ponents
+// => to fix a prop drillinng (great for layouts)
+// function moda l(){
+// return (<div>{Children}</div> )}//success is passed into modal : we can reuse modal
